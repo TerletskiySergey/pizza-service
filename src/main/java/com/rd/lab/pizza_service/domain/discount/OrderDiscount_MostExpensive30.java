@@ -3,22 +3,35 @@ package com.rd.lab.pizza_service.domain.discount;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.rd.lab.pizza_service.domain.Order;
-import com.rd.lab.pizza_service.domain.Pizza;
+import com.rd.lab.pizza_service.domain.order.Order;
+import com.rd.lab.pizza_service.domain.pizza.Pizza;
 import com.rd.lab.pizza_service.domain.util.CurrencyOperations;
 
-public class OrderDiscount_MostExpensive30 extends Discount {
-	private static final String title = "ORDER_DISCOUNT_MOST_EXPENSIVE_30_IF_AT_LEAST_5";
+public class OrderDiscount_MostExpensive30 implements Discount<Order> {
 	private static final int DISCOUNT_PERCENTAGE = 30;
 	private static final int MINIMAL_PIZZAS_NUMBER = 5;
 
+	private List<Pizza> pizzas;
+
 	public OrderDiscount_MostExpensive30() {
-		super(title);
+		super();
+	}
+
+	public OrderDiscount_MostExpensive30(List<Pizza> pizzas) {
+		super();
+		this.pizzas = pizzas;
 	}
 
 	@Override
-	public BigDecimal getDiscount(Order order) {
-		List<Pizza> pizzas = order.getPizzas();
+	public BigDecimal getDiscount() {
+		if (pizzas != null && pizzas.size() >= MINIMAL_PIZZAS_NUMBER) {
+			BigDecimal mostExp = getBiggestPrice(pizzas);
+			return CurrencyOperations.takePercent(mostExp, DISCOUNT_PERCENTAGE);
+		}
+		return BigDecimal.ZERO;
+	}
+
+	private BigDecimal getBiggestPrice(List<Pizza> pizzas) {
 		BigDecimal maxPrice = BigDecimal.ZERO;
 		if (pizzas.size() >= MINIMAL_PIZZAS_NUMBER) {
 			for (Pizza pizza : pizzas) {
@@ -27,8 +40,12 @@ public class OrderDiscount_MostExpensive30 extends Discount {
 					maxPrice = curPizzaPrice;
 				}
 			}
-			return CurrencyOperations.takePercent(maxPrice, String.valueOf(DISCOUNT_PERCENTAGE));
 		}
 		return maxPrice;
+	}
+
+	@Override
+	public void updateInstance(Order input) {
+		pizzas = input.getPizzas();
 	}
 }

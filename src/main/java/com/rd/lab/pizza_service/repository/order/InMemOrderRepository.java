@@ -3,7 +3,7 @@ package com.rd.lab.pizza_service.repository.order;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.rd.lab.pizza_service.domain.Order;
+import com.rd.lab.pizza_service.domain.order.Order;
 
 public class InMemOrderRepository implements OrderRepository {
 
@@ -20,15 +20,16 @@ public class InMemOrderRepository implements OrderRepository {
 		Order toUpdate = getOrderById(order.getId());
 		if (toUpdate != null) {
 			toUpdate.setCustomer(order.getCustomer());
-			toUpdate.setDiscounts(order.getDiscounts());
 			toUpdate.setPizzas(order.getPizzas());
 			toUpdate.setStatus(order.getStatus());
+			toUpdate.setCost(order.getCost());
 			return true;
 		}
 		return false;
 	}
 
-	private Order getOrderById(Long id) {
+	@Override
+	public Order getOrderById(Long id) {
 		for (Order o : orders) {
 			if (o.getId().equals(id)) {
 				return o;

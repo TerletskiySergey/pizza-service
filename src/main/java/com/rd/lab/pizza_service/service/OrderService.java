@@ -2,13 +2,14 @@ package com.rd.lab.pizza_service.service;
 
 import java.util.List;
 
-import com.rd.lab.pizza_service.domain.Customer;
-import com.rd.lab.pizza_service.domain.Order;
-import com.rd.lab.pizza_service.domain.discount.Discount;
+import com.rd.lab.pizza_service.domain.customer.Customer;
+import com.rd.lab.pizza_service.domain.order.Order;
 
 public interface OrderService {
 
-	List<Order> placeNewOrders(Customer customer, List<Integer> pizzasID, List<Discount> dsc);
+	List<Order> placeNewOrders(Customer customer, List<Integer> pizzasID);
 
-	boolean closeOrder(Order toClose);
+	boolean closeOrder(Long id);
+
+	Order getOrderById(Long id);
 }

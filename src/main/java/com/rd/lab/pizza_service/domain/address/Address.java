@@ -1,4 +1,4 @@
-package com.rd.lab.pizza_service.domain;
+package com.rd.lab.pizza_service.domain.address;
 
 public class Address {
 	private static Integer count = 0;

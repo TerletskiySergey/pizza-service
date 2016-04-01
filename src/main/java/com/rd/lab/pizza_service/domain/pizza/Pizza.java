@@ -1,4 +1,4 @@
-package com.rd.lab.pizza_service.domain;
+package com.rd.lab.pizza_service.domain.pizza;
 
 import java.math.BigDecimal;
 
@@ -20,7 +20,7 @@ public class Pizza {
 		super();
 		this.id = ++count;
 		this.name = name;
-		this.price = CurrencyOperations.setDefaultScale(price);
+		this.price = CurrencyOperations.setCurrencyScale(price);
 		this.type = type;
 	}
 
@@ -49,7 +49,7 @@ public class Pizza {
 	}
 
 	public void setPrice(BigDecimal price) {
-		this.price = CurrencyOperations.setDefaultScale(price);
+		this.price = CurrencyOperations.setCurrencyScale(price);
 	}
 
 	public void setType(Type type) {

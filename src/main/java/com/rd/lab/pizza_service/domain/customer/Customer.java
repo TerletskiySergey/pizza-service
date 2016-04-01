@@ -1,4 +1,7 @@
-package com.rd.lab.pizza_service.domain;
+package com.rd.lab.pizza_service.domain.customer;
+
+import com.rd.lab.pizza_service.domain.acc_card.AccCard;
+import com.rd.lab.pizza_service.domain.address.Address;
 
 public class Customer {
 	private static int count;

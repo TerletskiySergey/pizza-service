@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.rd.lab.pizza_service.domain.Pizza;
+import com.rd.lab.pizza_service.domain.pizza.Pizza;
 
 public class InMemPizzaRepository implements PizzaRepository {
 
