@@ -4,6 +4,7 @@ import com.rd.lab.pizza_service.domain.acc_card.AccCard;
 import com.rd.lab.pizza_service.domain.order.Order;
 
 public class DefaultDoneStatus implements Status {
+	private static final String STRING_REPRESENTATION = "DONE";
 
 	private Order order;
 
@@ -25,7 +26,7 @@ public class DefaultDoneStatus implements Status {
 
 	@Override
 	public String toString() {
-		return "DefaultDoneStatus";
+		return STRING_REPRESENTATION;
 	}
 
 }

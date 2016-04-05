@@ -7,7 +7,7 @@ import com.rd.lab.pizza_service.domain.order.Order;
 import com.rd.lab.pizza_service.domain.pizza.Pizza;
 import com.rd.lab.pizza_service.domain.util.CurrencyOperations;
 
-public class OrderDiscount_MostExpensive30 implements Discount<Order> {
+public class OrderDiscount_MostExpensive30 implements Discount {
 	private static final int DISCOUNT_PERCENTAGE = 30;
 	private static final int MINIMAL_PIZZAS_NUMBER = 5;
 
@@ -45,7 +45,15 @@ public class OrderDiscount_MostExpensive30 implements Discount<Order> {
 	}
 
 	@Override
-	public void updateInstance(Order input) {
-		pizzas = input.getPizzas();
+	public void updateInstance(Object input) {
+		if (isApplicableFor(input)) {
+			Order order = (Order) input;
+			pizzas = order.getPizzas();
+		}
+	}
+
+	@Override
+	public boolean isApplicableFor(Object obj) {
+		return obj.getClass() == Order.class;
 	}
 }

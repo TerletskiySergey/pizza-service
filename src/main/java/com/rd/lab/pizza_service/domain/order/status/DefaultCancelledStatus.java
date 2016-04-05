@@ -1,6 +1,7 @@
 package com.rd.lab.pizza_service.domain.order.status;
 
 public class DefaultCancelledStatus implements Status {
+	private static final String STRING_REPRESENTATION = "CANCELLED";
 
 	@Override
 	public int getPriority() {
@@ -9,6 +10,6 @@ public class DefaultCancelledStatus implements Status {
 
 	@Override
 	public String toString() {
-		return "DefaultCancelledStatus";
+		return STRING_REPRESENTATION;
 	}
 }

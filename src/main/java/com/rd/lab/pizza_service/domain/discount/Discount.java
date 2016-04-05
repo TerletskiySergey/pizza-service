@@ -2,9 +2,11 @@ package com.rd.lab.pizza_service.domain.discount;
 
 import java.math.BigDecimal;
 
-public interface Discount<T> {
+public interface Discount {
 
 	BigDecimal getDiscount();
 
-	void updateInstance(T input);
+	void updateInstance(Object input);
+
+	boolean isApplicableFor(Object obj);
 }

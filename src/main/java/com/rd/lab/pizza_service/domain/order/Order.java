@@ -29,8 +29,7 @@ public class Order {
 	public int add(List<Pizza> toAdd, int limit) {
 		int toIndex = status.add(toAdd, limit);
 		for (int i = 0; i < toIndex; i++) {
-			Pizza pizzaToAdd = toAdd.get(i);
-			pizzas.add(pizzaToAdd);
+			pizzas.add(toAdd.get(i));
 		}
 		return toIndex;
 	}

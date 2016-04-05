@@ -8,7 +8,7 @@ import com.rd.lab.pizza_service.domain.order.Order;
 import com.rd.lab.pizza_service.domain.pizza.Pizza;
 import com.rd.lab.pizza_service.domain.util.CurrencyOperations;
 
-public class AccCardDiscount_10_30Max implements Discount<Order> {
+public class AccCardDiscount_10_30Max implements Discount {
 
 	private static final int CARD_DISCOUNT_PERCENTAGE = 10;
 	private static final int MAX_DISCOUNT_PERCENTAGE = 30;
@@ -47,8 +47,16 @@ public class AccCardDiscount_10_30Max implements Discount<Order> {
 	}
 
 	@Override
-	public void updateInstance(Order input) {
-		card = input.getCustomer().getCard();
-		pizzas = input.getPizzas();
+	public void updateInstance(Object input) {
+		if (isApplicableFor(input)) {
+			Order order = (Order) input;
+			card = order.getCustomer().getCard();
+			pizzas = order.getPizzas();
+		}
+	}
+
+	@Override
+	public boolean isApplicableFor(Object obj) {
+		return obj.getClass() == Order.class;
 	}
 }

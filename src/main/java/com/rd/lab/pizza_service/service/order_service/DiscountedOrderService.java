@@ -1,4 +1,4 @@
-package com.rd.lab.pizza_service.service;
+package com.rd.lab.pizza_service.service.order_service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -12,18 +12,18 @@ import com.rd.lab.pizza_service.domain.util.CurrencyOperations;
 
 public class DiscountedOrderService extends SimpleOrderService {
 
-	private List<Discount<Order>> dsc = new ArrayList<>();
+	private List<Discount> dsc = new ArrayList<>();
 
-	public DiscountedOrderService(List<Discount<Order>> dsc) {
+	public DiscountedOrderService(List<Discount> dsc) {
 		super();
 		this.dsc = dsc;
 	}
 
-	public List<Discount<Order>> getDsc() {
+	public List<Discount> getDsc() {
 		return dsc;
 	}
 
-	public void setDsc(List<Discount<Order>> dsc) {
+	public void setDsc(List<Discount> dsc) {
 		this.dsc = dsc;
 	}
 
@@ -39,7 +39,7 @@ public class DiscountedOrderService extends SimpleOrderService {
 		for (Order o : orders) {
 			BigDecimal cost = o.getCost();
 			BigDecimal disc = BigDecimal.ZERO;
-			for (Discount<Order> d : dsc) {
+			for (Discount d : dsc) {
 				d.updateInstance(o);
 				disc = CurrencyOperations.addCosts(disc, d.getDiscount());
 			}

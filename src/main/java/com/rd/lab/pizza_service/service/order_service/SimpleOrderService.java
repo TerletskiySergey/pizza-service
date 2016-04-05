@@ -1,4 +1,4 @@
-package com.rd.lab.pizza_service.service;
+package com.rd.lab.pizza_service.service.order_service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +58,7 @@ public class SimpleOrderService implements OrderService {
 	protected List<Order> createOrders(Customer customer, List<Pizza> pizzas) {
 		List<Order> toReturn = new ArrayList<>();
 		int ordersCount = pizzas.size();
-		Order curOrder = new Order(customer, new DefaultNewStatus());
+		Order curOrder = new Order(customer, new DefaultNewStatus(0));
 		toReturn.add(curOrder);
 		while (ordersCount > 0) {
 			ordersCount -= curOrder.add(pizzas, maxPizzaNumber);

@@ -1,4 +1,4 @@
-package com.rd.lab.pizza_service.service;
+package com.rd.lab.pizza_service.service.order_service;
 
 import java.util.List;
 
