@@ -3,6 +3,7 @@ package com.rd.lab.pizza_service.service.order_service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rd.lab.pizza_service.domain.acc_card.AccCard;
 import com.rd.lab.pizza_service.domain.customer.Customer;
 import com.rd.lab.pizza_service.domain.order.Order;
 import com.rd.lab.pizza_service.domain.order.status.DefaultDoneStatus;
@@ -25,7 +26,11 @@ public class SimpleOrderService implements OrderService {
 	public boolean closeOrder(Long orderId) {
 		Order toClose = orderRep.getOrderById(orderId);
 		if (toClose != null) {
-			toClose.setStatus(new DefaultDoneStatus(toClose));
+			toClose.setStatus(new DefaultDoneStatus());
+			AccCard card = toClose.getCustomer().getCard();
+			if (card != null) {
+				card.addAmount(toClose.getCost());
+			}
 			return orderRep.updateOrder(toClose);
 		}
 		return false;

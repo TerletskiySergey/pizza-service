@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="disc1"
+		class="com.rd.lab.pizza_service.domain.discount.OrderDiscount_MostExpensive30" />
+	<bean id="disc2"
+		class="com.rd.lab.pizza_service.domain.discount.AccCardDiscount_10_30Max" />
+	<bean id="discounts" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<ref bean="disc1" />
+				<ref bean="disc2" />
+			</list>
+		</constructor-arg>
+	</bean>
+	<bean id="discountedOrderService"
+		class="com.rd.lab.pizza_service.service.order_service.DiscountedOrderService">
+		<constructor-arg index="0" ref="discounts" />
+	</bean>
+	<bean id="defaultAddress" class="com.rd.lab.pizza_service.domain.address.Address">
+		<constructor-arg>
+			<value>defaultCode</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>defaultCountry</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>defaultCity</value>
+		</constructor-arg>
+		<constructor-arg>
+			<value>deafultAddress</value>
+		</constructor-arg>
+	</bean>
+	<bean id="defaultAcCard" class="com.rd.lab.pizza_service.domain.acc_card.AccCard">
+		<constructor-arg>
+			<bean class="java.math.BigDecimal">
+				<constructor-arg>
+					<value>100</value>
+				</constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+	<bean id="defaultCustomer" class="com.rd.lab.pizza_service.domain.customer.Customer">
+		<constructor-arg>
+			<value>defaultCustomer</value>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="defaultAddress"></ref>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="defaultAcCard"></ref>
+		</constructor-arg>
+	</bean>
+</beans>
