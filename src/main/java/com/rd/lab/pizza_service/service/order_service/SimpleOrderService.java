@@ -57,11 +57,12 @@ public class SimpleOrderService implements OrderService {
 
 	protected List<Order> createOrders(Customer customer, List<Pizza> pizzas) {
 		List<Order> toReturn = new ArrayList<>();
-		int ordersCount = pizzas.size();
-		Order curOrder = new Order(customer, new DefaultNewStatus(0));
-		toReturn.add(curOrder);
-		while (ordersCount > 0) {
-			ordersCount -= curOrder.add(pizzas, maxPizzaNumber);
+		int ordersCount = 0;
+		int maxCount = pizzas.size();
+		while (ordersCount < maxCount) {
+			Order newOrder = new Order(customer, new DefaultNewStatus(0));
+			ordersCount += newOrder.add(pizzas.subList(ordersCount, maxCount), maxPizzaNumber);
+			toReturn.add(newOrder);
 		}
 		return toReturn;
 	}
@@ -69,7 +70,10 @@ public class SimpleOrderService implements OrderService {
 	protected List<Pizza> pizzasByIds(List<Integer> pizzasID) {
 		List<Pizza> toReturn = new ArrayList<>();
 		for (Integer id : pizzasID) {
-			toReturn.add(pizzaRep.getPizzaByID(id));
+			Pizza retrieved = pizzaRep.getPizzaByID(id);
+			if (retrieved != null) {
+				toReturn.add(retrieved);
+			}
 		}
 		return toReturn;
 	}

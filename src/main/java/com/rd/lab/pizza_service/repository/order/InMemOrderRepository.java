@@ -18,10 +18,9 @@ public class InMemOrderRepository implements OrderRepository {
 	@Override
 	public boolean updateOrder(Order order) {
 		Order toUpdate = getOrderById(order.getId());
-		if (toUpdate != null) {
+		if (toUpdate != null && toUpdate.setStatus(order.getStatus())) {
 			toUpdate.setCustomer(order.getCustomer());
 			toUpdate.setPizzas(order.getPizzas());
-			toUpdate.setStatus(order.getStatus());
 			toUpdate.setCost(order.getCost());
 			return true;
 		}
