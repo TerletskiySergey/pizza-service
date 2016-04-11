@@ -1,8 +1,10 @@
 package com.rd.lab.pizza_service.service.order_service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
 
@@ -29,7 +31,7 @@ import com.rd.lab.pizza_service.repository.pizza.PizzaRepository;
 
 public class SimpleOrderServiceTest {
 
-	private static Map<Integer, Pizza> pizzaDB = new HashMap<>();
+	private static Map<Integer, Pizza> pizzaDB;
 	private static Customer cust;
 
 	@Mock
@@ -43,6 +45,7 @@ public class SimpleOrderServiceTest {
 
 	@BeforeClass
 	public static void initTestStat() {
+		pizzaDB = new HashMap<>();
 		Pizza p1 = new Pizza("pizza1", new BigDecimal("1"), Pizza.Type.Meat);
 		Pizza p2 = new Pizza("pizza2", new BigDecimal("2"), Pizza.Type.Meat);
 		Pizza p3 = new Pizza("pizza3", new BigDecimal("3"), Pizza.Type.Meat);
@@ -54,7 +57,7 @@ public class SimpleOrderServiceTest {
 		pizzaDB.put(p4.getId(), p4);
 		pizzaDB.put(p5.getId(), p5);
 		Address addr = new Address("postalCode", "country", "city", "addrLine");
-		AccCard card = new AccCard(new BigDecimal("1000"));
+		AccCard card = new AccCard(BigDecimal.ZERO);
 		cust = new Customer("name", addr, card);
 	}
 
@@ -73,8 +76,13 @@ public class SimpleOrderServiceTest {
 				toUpdate.setCost(input.getCost());
 				toUpdate.setCustomer(input.getCustomer());
 				toUpdate.setPizzas(input.getPizzas());
+				return true;
 			}
 			return false;
+		});
+		when(orderRepMock.getOrderById(anyLong())).thenAnswer((o) -> {
+			Long id = (Long) o.getArguments()[0];
+			return orderDB.get(id);
 		});
 		when(pizzaRepMock.getPizzaByID(anyInt())).thenAnswer((o) -> {
 			Integer id = (Integer) o.getArguments()[0];
@@ -138,11 +146,24 @@ public class SimpleOrderServiceTest {
 	}
 
 	@Test
-	public void testCloseOrder_invalidId_shouldDoNothing() {
-		service.placeNewOrders(cust, Arrays.asList(1));
+	public void testCloseOrder_invalidId_shouldDoNothing_shouldReturnFalse() {
+		Long orderId = service.placeNewOrders(cust, Arrays.asList(1)).get(0).getId();
 		assertEquals(1, orderDB.size());
-		service.closeOrder(-1l);
-		assertEquals(1, orderDB.size());
+		assertFalse(service.closeOrder(-1l));
+		Order closed = orderDB.get(orderId);
+		assertEquals("NEW", closed.getStatus().toString());
+		assertEquals(BigDecimal.ONE.doubleValue(), closed.getCost().doubleValue(), 0);
+		assertEquals(BigDecimal.ZERO.doubleValue(),
+				closed.getCustomer().getCard().getAmount().doubleValue(), 0);
 	}
 
+	@Test
+	public void testCloseOrder_correctId_shouldSetCloseState_shouldCharge() {
+		Long orderId = service.placeNewOrders(cust, Arrays.asList(1)).get(0).getId();
+		assertTrue(service.closeOrder(orderId));
+		Order closed = orderDB.get(orderId);
+		assertEquals("DONE", closed.getStatus().toString());
+		assertEquals(BigDecimal.ONE.doubleValue(), closed.getCost().doubleValue(), 0);
+		assertEquals(closed.getCost(), closed.getCustomer().getCard().getAmount());
+	}
 }
