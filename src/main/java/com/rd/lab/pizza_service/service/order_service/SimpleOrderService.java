@@ -3,6 +3,9 @@ package com.rd.lab.pizza_service.service.order_service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.rd.lab.pizza_service.domain.acc_card.AccCard;
 import com.rd.lab.pizza_service.domain.customer.Customer;
 import com.rd.lab.pizza_service.domain.order.Order;
@@ -14,12 +17,15 @@ import com.rd.lab.pizza_service.repository.order.OrderRepository;
 import com.rd.lab.pizza_service.repository.pizza.InMemPizzaRepository;
 import com.rd.lab.pizza_service.repository.pizza.PizzaRepository;
 
+@Service
 public class SimpleOrderService implements OrderService {
 
 	protected static final int DEFAULT_ORDER_MAX_PIZZAS_NUMBER = 10;
 
 	protected int maxPizzaNumber = DEFAULT_ORDER_MAX_PIZZAS_NUMBER;
+	@Autowired
 	protected OrderRepository orderRep = new InMemOrderRepository();
+	@Autowired
 	protected PizzaRepository pizzaRep = new InMemPizzaRepository();
 
 	@Override

@@ -1,13 +1,23 @@
 package com.rd.lab.pizza_service.domain.address;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component
+@Scope("prototype")
 public class Address {
+	private static final String EMPTY_SRTRING = "";
 	private static Integer count = 0;
 
 	private Integer id;
-	private String postalCode;
-	private String country;
-	private String city;
-	private String addrLine;
+	private String postalCode = EMPTY_SRTRING;
+	private String country = EMPTY_SRTRING;
+	private String city = EMPTY_SRTRING;
+	private String addrLine = EMPTY_SRTRING;
+
+	public Address() {
+		this(EMPTY_SRTRING, EMPTY_SRTRING, EMPTY_SRTRING, EMPTY_SRTRING);
+	}
 
 	public Address(String postalCode, String country, String city, String addrLine) {
 		super();

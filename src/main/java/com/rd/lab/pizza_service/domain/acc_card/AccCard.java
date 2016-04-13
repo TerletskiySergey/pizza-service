@@ -2,8 +2,15 @@ package com.rd.lab.pizza_service.domain.acc_card;
 
 import java.math.BigDecimal;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import com.rd.lab.pizza_service.domain.util.CurrencyOperations;
 
+@Component
+@Scope("prototype")
 public class AccCard {
 	private static Integer count = 0;
 
@@ -14,7 +21,8 @@ public class AccCard {
 		this(BigDecimal.ZERO);
 	}
 
-	public AccCard(BigDecimal amount) {
+	@Autowired
+	public AccCard(@Value("100") BigDecimal amount) {
 		super();
 		this.id = ++count;
 		this.amount = CurrencyOperations.setCurrencyScale(amount);

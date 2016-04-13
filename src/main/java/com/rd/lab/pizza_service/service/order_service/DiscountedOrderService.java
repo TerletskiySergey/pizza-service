@@ -1,8 +1,11 @@
 package com.rd.lab.pizza_service.service.order_service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.rd.lab.pizza_service.domain.customer.Customer;
 import com.rd.lab.pizza_service.domain.discount.Discount;
@@ -10,9 +13,15 @@ import com.rd.lab.pizza_service.domain.order.Order;
 import com.rd.lab.pizza_service.domain.pizza.Pizza;
 import com.rd.lab.pizza_service.domain.util.CurrencyOperations;
 
+@Service
 public class DiscountedOrderService extends SimpleOrderService {
 
-	private List<Discount> dsc = new ArrayList<>();
+	@Autowired
+	private List<Discount> dsc;
+
+	public DiscountedOrderService() {
+		this(Arrays.asList());
+	}
 
 	public DiscountedOrderService(List<Discount> dsc) {
 		super();

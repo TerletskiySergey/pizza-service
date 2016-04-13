@@ -13,12 +13,13 @@ import com.rd.lab.pizza_service.service.order_service.DiscountedOrderService;
 public class PizzaApp {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext ac = new ClassPathXmlApplicationContext(
-				"app_context_config.xml");
-		DiscountedOrderService os = ac.getBean("discountedOrderService",
-				DiscountedOrderService.class);
-		Customer cust = ac.getBean("defaultCustomer", Customer.class);
-		List<Integer> pizzasIds = Arrays.asList(1, 2, 1, 2, 3);
+		ConfigurableApplicationContext repoContext = new ClassPathXmlApplicationContext(
+				"annos_based_repo_config.xml");
+		ConfigurableApplicationContext serviceContext = new ClassPathXmlApplicationContext(
+				new String[] { "annos_based_service_config.xml" }, repoContext);
+		DiscountedOrderService os = serviceContext.getBean(DiscountedOrderService.class);
+		Customer cust = serviceContext.getBean(Customer.class);
+		List<Integer> pizzasIds = Arrays.asList(1, 2, 3);
 		List<Order> orders = os.placeNewOrders(cust, pizzasIds);
 		for (Order order : orders) {
 			System.out.println(order);
@@ -27,6 +28,7 @@ public class PizzaApp {
 			System.out.println(order);
 			System.out.println(order.getCustomer().getCard());
 		}
-		ac.close();
+		repoContext.close();
+		serviceContext.close();
 	}
 }

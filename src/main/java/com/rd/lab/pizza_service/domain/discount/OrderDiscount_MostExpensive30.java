@@ -3,10 +3,13 @@ package com.rd.lab.pizza_service.domain.discount;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.rd.lab.pizza_service.domain.order.Order;
 import com.rd.lab.pizza_service.domain.pizza.Pizza;
 import com.rd.lab.pizza_service.domain.util.CurrencyOperations;
 
+@Component
 public class OrderDiscount_MostExpensive30 implements Discount {
 	private static final int DISCOUNT_PERCENTAGE = 30;
 	private static final int MINIMAL_PIZZAS_NUMBER = 5;

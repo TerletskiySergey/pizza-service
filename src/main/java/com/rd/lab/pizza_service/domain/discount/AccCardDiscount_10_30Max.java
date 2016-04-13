@@ -3,11 +3,14 @@ package com.rd.lab.pizza_service.domain.discount;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.rd.lab.pizza_service.domain.acc_card.AccCard;
 import com.rd.lab.pizza_service.domain.order.Order;
 import com.rd.lab.pizza_service.domain.pizza.Pizza;
 import com.rd.lab.pizza_service.domain.util.CurrencyOperations;
 
+@Component
 public class AccCardDiscount_10_30Max implements Discount {
 
 	private static final int CARD_DISCOUNT_PERCENTAGE = 10;

@@ -1,8 +1,13 @@
 package com.rd.lab.pizza_service.domain.customer;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import com.rd.lab.pizza_service.domain.acc_card.AccCard;
 import com.rd.lab.pizza_service.domain.address.Address;
 
+@Component
 public class Customer {
 	private static int count;
 	private Integer id;
@@ -14,7 +19,8 @@ public class Customer {
 		this(name, addr, null);
 	}
 
-	public Customer(String name, Address addr, AccCard card) {
+	@Autowired
+	public Customer(@Value("defaultCustomer") String name, Address addr, AccCard card) {
 		super();
 		this.id = ++count;
 		this.name = name;

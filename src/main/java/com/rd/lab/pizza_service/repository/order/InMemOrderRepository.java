@@ -3,8 +3,11 @@ package com.rd.lab.pizza_service.repository.order;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.rd.lab.pizza_service.domain.order.Order;
 
+@Repository
 public class InMemOrderRepository implements OrderRepository {
 
 	private List<Order> orders = new ArrayList<>();

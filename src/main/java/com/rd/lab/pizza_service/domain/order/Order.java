@@ -5,19 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rd.lab.pizza_service.domain.customer.Customer;
+import com.rd.lab.pizza_service.domain.order.status.DefaultNewStatus;
 import com.rd.lab.pizza_service.domain.order.status.Status;
 import com.rd.lab.pizza_service.domain.pizza.Pizza;
 import com.rd.lab.pizza_service.domain.util.CurrencyOperations;
 
 public class Order {
-
 	private static Long count = 0L;
-
 	private Long id;
 	private Status status;
 	private BigDecimal cost;
 	private Customer customer;
 	private List<Pizza> pizzas;
+
+	public Order(Customer customer) {
+		this(customer, new DefaultNewStatus());
+	}
 
 	public Order(Customer customer, Status status) {
 		this.id = ++count;
