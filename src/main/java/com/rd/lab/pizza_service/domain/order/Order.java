@@ -4,12 +4,17 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.rd.lab.pizza_service.domain.customer.Customer;
 import com.rd.lab.pizza_service.domain.order.status.DefaultNewStatus;
 import com.rd.lab.pizza_service.domain.order.status.Status;
 import com.rd.lab.pizza_service.domain.pizza.Pizza;
 import com.rd.lab.pizza_service.domain.util.CurrencyOperations;
+import com.rd.lab.pizza_service.infrastructure.anno.Benchmark;
+import com.rd.lab.pizza_service.infrastructure.anno.Domain;
 
+@Domain
 public class Order {
 	private static Long count = 0L;
 	private Long id;
@@ -18,6 +23,7 @@ public class Order {
 	private Customer customer;
 	private List<Pizza> pizzas;
 
+	@Autowired
 	public Order(Customer customer) {
 		this(customer, new DefaultNewStatus());
 	}
@@ -29,6 +35,7 @@ public class Order {
 		this.pizzas = new ArrayList<>();
 	}
 
+	@Benchmark
 	public int add(List<Pizza> toAdd, int limit) {
 		int toIndex = status.add(toAdd, limit);
 		for (int i = 0; i < toIndex; i++) {

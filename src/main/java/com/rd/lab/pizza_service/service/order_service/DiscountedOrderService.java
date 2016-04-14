@@ -12,6 +12,7 @@ import com.rd.lab.pizza_service.domain.discount.Discount;
 import com.rd.lab.pizza_service.domain.order.Order;
 import com.rd.lab.pizza_service.domain.pizza.Pizza;
 import com.rd.lab.pizza_service.domain.util.CurrencyOperations;
+import com.rd.lab.pizza_service.infrastructure.anno.Benchmark;
 
 @Service
 public class DiscountedOrderService extends SimpleOrderService {
@@ -36,6 +37,7 @@ public class DiscountedOrderService extends SimpleOrderService {
 		this.dsc = dsc;
 	}
 
+	@Benchmark
 	@Override
 	public List<Order> placeNewOrders(Customer customer, List<Integer> pizzasID) {
 		List<Pizza> pizzas = pizzasByIds(pizzasID);

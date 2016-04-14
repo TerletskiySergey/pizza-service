@@ -1,4 +1,4 @@
-package com.rd.lab.pizza_service.spring.converter;
+package com.rd.lab.pizza_service.infrastructure.converter;
 
 import java.math.BigDecimal;
 
