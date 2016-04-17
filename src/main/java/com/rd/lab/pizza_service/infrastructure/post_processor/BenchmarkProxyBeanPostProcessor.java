@@ -97,7 +97,7 @@ public class BenchmarkProxyBeanPostProcessor implements BeanPostProcessor {
 				handler);
 	}
 
-	void getAllInterfaces(Class<?> curClass, Set<Class<?>> set) {
+	private void getAllInterfaces(Class<?> curClass, Set<Class<?>> set) {
 		if (curClass == null) {
 			return;
 		}

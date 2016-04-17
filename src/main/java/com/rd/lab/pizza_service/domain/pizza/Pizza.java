@@ -16,6 +16,10 @@ public class Pizza {
 	private BigDecimal price;
 	private Type type;
 
+	public Pizza() {
+		super();
+	}
+
 	public Pizza(String name, BigDecimal price, Type type) {
 		super();
 		this.id = ++count;

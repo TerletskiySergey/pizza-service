@@ -4,11 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import com.rd.lab.pizza_service.domain.pizza.Pizza;
 
-@Repository
 public class InMemPizzaRepository implements PizzaRepository {
 
 	private List<Pizza> pizzas = new ArrayList<>();
@@ -26,6 +23,24 @@ public class InMemPizzaRepository implements PizzaRepository {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public int addPizza(Pizza toAdd) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int update(Pizza toUpd) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean delete(int id) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

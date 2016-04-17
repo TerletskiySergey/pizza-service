@@ -16,9 +16,10 @@ public class PizzaApp {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext repoContext = new ClassPathXmlApplicationContext(
 				"annos_based_repo_config.xml");
+		repoContext.getEnvironment().setActiveProfiles("dev");
+		repoContext.refresh();
 		ConfigurableApplicationContext serviceContext = new ClassPathXmlApplicationContext(
 				new String[] { "annos_based_service_config.xml" }, repoContext);
-
 		OrderService os = serviceContext.getBean(OrderService.class);
 		Customer cust = serviceContext.getBean(Customer.class);
 		List<Integer> pizzasIds = Arrays.asList(1, 2, 3);
