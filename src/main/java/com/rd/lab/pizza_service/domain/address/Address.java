@@ -1,31 +1,41 @@
 package com.rd.lab.pizza_service.domain.address;
 
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.rd.lab.pizza_service.domain.customer.Customer;
+
 @Component
 @Scope("prototype")
+@Entity
+@Table(name = "tb_address")
 public class Address {
-	private static final String EMPTY_SRTRING = "";
-	private static Integer count = 0;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String postalCode = EMPTY_SRTRING;
-	private String country = EMPTY_SRTRING;
-	private String city = EMPTY_SRTRING;
-	private String addrLine = EMPTY_SRTRING;
+	@Column(name = "postal_code", nullable = false)
+	private String postalCode;
+	@Column(nullable = false)
+	private String country;
+	@Column(nullable = false)
+	private String city;
+	@Column(name = "addr_line", nullable = false)
+	private String addrLine;
+	@ManyToMany(mappedBy = "addr")
+	private List<Customer> cust;
 
 	public Address() {
-		this(EMPTY_SRTRING, EMPTY_SRTRING, EMPTY_SRTRING, EMPTY_SRTRING);
-	}
-
-	public Address(String postalCode, String country, String city, String addrLine) {
-		super();
-		this.id = ++count;
-		this.postalCode = postalCode;
-		this.country = country;
-		this.city = city;
-		this.addrLine = addrLine;
 	}
 
 	public String getAddrLine() {
@@ -38,6 +48,10 @@ public class Address {
 
 	public String getCountry() {
 		return country;
+	}
+
+	public List<Customer> getCust() {
+		return cust;
 	}
 
 	public Integer getId() {
@@ -58,6 +72,10 @@ public class Address {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	public void setCust(List<Customer> cust) {
+		this.cust = cust;
 	}
 
 	public void setId(Integer id) {
